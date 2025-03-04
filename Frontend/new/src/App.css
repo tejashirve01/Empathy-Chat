@@ -1,0 +1,325 @@
+/* Global resets and font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* ----------------------------------------
+   1) LANDING PAGE STYLES
+---------------------------------------- */
+.landing-container {
+  width: 100vw;
+  height: 100vh;
+  background: url("backgroundimage.png") no-repeat center center/cover; /* Replace with your image */
+  position: relative;
+  color: #ffffff;
+}
+.landing-nav {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.landing-login-btn {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.landing-login-btn:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+.landing-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* ----------------------------------------
+   2) LOGIN PAGE STYLES
+---------------------------------------- */
+.login-bg {
+  width: 100vw;
+  height: 100vh;
+  background-color: #0b141a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 8px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.login-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+.login-container input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.login-container button {
+  padding: 10px 20px;
+  background: #075e54;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.login-container button:hover {
+  background: #0a7b68;
+}
+
+/* ----------------------------------------
+   3) DASHBOARD (WhatsApp-style) STYLES
+---------------------------------------- */
+.dashboard {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: #111b21;
+  overflow: hidden;
+}
+.sidebar {
+  width: 350px;
+  background-color: #202c33;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #202c33;
+  border-bottom: 1px solid #2a3942;
+  justify-content: space-between;
+}
+.sidebar-icons {
+  display: flex;
+  gap: 15px;
+  font-size: 1.2rem;
+  color: #d1d1d1;
+}
+.sidebar-title {
+  color: #d1d1d1;
+  font-size: 1rem;
+  margin-right: 10px;
+}
+.sidebar-search {
+  padding: 10px;
+  background-color: #111b21;
+  border-bottom: 1px solid #2a3942;
+}
+.search-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background-color: #2a3942;
+  color: #fff;
+}
+.contacts-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: #111b21;
+}
+.contact-row {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #2a3942;
+  color: #e9edef;
+}
+.contact-row:hover,
+.contact-row.active {
+  background-color: #2a3942;
+}
+.contact-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.contact-name {
+  font-weight: 500;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+.contact-lastmsg {
+  font-size: 0.8rem;
+  color: #8696a0;
+}
+.contact-time {
+  font-size: 0.75rem;
+  color: #8696a0;
+  margin-left: auto;
+}
+.main-area {
+  flex-grow: 1;
+  background-color: #0b141a;
+  display: flex;
+  flex-direction: column;
+}
+.chat-area-placeholder {
+  color: #8696a0;
+  margin: auto;
+  text-align: center;
+  max-width: 400px;
+  padding: 20px;
+}
+.chat-area {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.chat-header {
+  background-color: #202c33;
+  padding: 10px 15px;
+  color: #e9edef;
+  border-left: 1px solid #2a3942;
+  border-bottom: 1px solid #2a3942;
+}
+.chat-header h1 {
+  font-size: 1rem;
+  margin: 0;
+}
+.chat-body {
+  flex-grow: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background-color: #0b141a;
+  background-image: url("https://web.whatsapp.com/img/bg-chat-tile_dark_3.png");
+  background-repeat: repeat;
+  background-size: cover;
+}
+.message {
+  display: inline-block;
+  margin: 5px 0;
+  padding: 8px 12px;
+  border-radius: 7px;
+  max-width: 60%;
+  word-wrap: break-word;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+.personal {
+  background-color: #005c4b;
+  color: #fff;
+  align-self: flex-end;
+}
+.received {
+  background-color: #202c33;
+  color: #fff;
+  align-self: flex-start;
+}
+.system {
+  background-color: #3c464c;
+  color: #f0f0f0;
+  align-self: center;
+}
+.modified {
+  background-color: #f4e9c5;
+  color: #222;
+  align-self: center;
+  font-style: italic;
+}
+.chat-footer {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #202c33;
+  border-left: 1px solid #2a3942;
+  border-top: 1px solid #2a3942;
+}
+.toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 24px;
+  margin-right: 8px;
+}
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  border-radius: 24px;
+  transition: 0.4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+input:checked + .slider {
+  background-color: #00a884;
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+.toggle-label {
+  color: #e9edef;
+  margin-right: 10px;
+  font-size: 0.85rem;
+}
+.chat-input {
+  flex-grow: 1;
+  display: flex;
+  gap: 8px;
+}
+.chat-input input {
+  flex-grow: 1;
+  padding: 8px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background-color: #2a3942;
+  color: #fff;
+}
+/* The new arrow button style */
+.send-arrow-btn {
+  background-color: #00a884;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.2rem; /* Make the arrow bigger */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.send-arrow-btn:hover {
+  background-color: #00c69c;
+}

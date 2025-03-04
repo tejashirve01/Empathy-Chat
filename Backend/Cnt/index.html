@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Monitoring and Anomaly Detection in Industrial System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f4f6f8, #ffffff);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #ffffff;
+            color: #2c3e50;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header img {
+            height: 50px;
+            margin-left: 20px;
+        }
+
+        header h1 {
+            flex: 1;
+            text-align: center;
+            font-size: 26px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        nav button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav button:hover {
+            background-color: #1d6fa5;
+        }
+
+        .container {
+            margin: 40px auto;
+            padding: 20px;
+            max-width: 1200px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2, h3 {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 26px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .methodology img {
+            display: block;
+            margin: 20px auto;
+            width: 100%;
+            max-width: 700px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .graphs-container {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .graph-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .graph-section img {
+            flex: 1;
+            max-width: 50%;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .graph-section p {
+            flex: 1;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #ffffff;
+            color: #333;
+            padding: 10px;
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Results Page */
+        .results-section img {
+            display: block;
+            margin: 20px auto;
+            width: 100%;
+            max-width: 700px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+        }
+
+        /* Two columns for models */
+        .models-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .models-container h3 {
+            text-align: center;
+        }
+
+        .models-container img {
+            max-width: 100%;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <img src="logo_vit.png" alt="VIT Logo">
+        <h1>Predictive Monitoring and Anomaly Detection in Industrial System</h1>
+        <nav>
+            <button onclick="goToResultsPage()">Go to Results</button>
+        </nav>
+    </header>
+
+    <!-- Main Page -->
+    <div id="main-page" class="container">
+        <h2>About</h2>
+        <p>
+            This project develops an automated anomaly detection system for the oil and gas industry, using real-time sensor data (e.g., gas levels, temperature, pressure) to identify abnormal patterns. It combines models like Isolation Forest, Local Outlier Factor, Robust Covariance, and One-Class SVM for accurate detection. The system improves safety, efficiency, and cost-effectiveness by quickly addressing critical anomalies in operations.
+        </p>
+
+        <h2>Methodology</h2>
+        <div class="methodology">
+            <img src="m_d.png" alt="Methodology Diagram">
+        </div>
+
+        <div class="graphs-container">
+            <div class="graph-section">
+                <img src="tsm.png" alt="Time Series vs Methane Graph">
+                <p>This graph shows the relationship between time and methane levels in the system. It helps identify trends and any unusual spikes that could indicate anomalies.</p>
+            </div>
+            <div class="graph-section">
+                <p>This graph visualizes data from multiple sensors over time, highlighting any discrepancies or abnormal behavior across various parameters.</p>
+                <img src="tsms.png" alt="Time Series vs Multiple Sensors Graph">
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Page -->
+    <div id="results-page" class="container" style="display: none;">
+        <h2>Results</h2>
+        <div class="results-section">
+            <h3>Correlation Matrix</h3>
+            <img src="cm.png" alt="Correlation Matrix">
+        </div>
+
+        <!-- 2x2 Grid for Models -->
+        <div class="models-container">
+            <div class="results-section">
+                <h3>Anomaly Detection by Isolation Forest</h3>
+                <img src="if.png" alt="Isolation Forest">
+            </div>
+            <div class="results-section">
+                <h3>Anomaly Detection by Local Outlier Factor</h3>
+                <img src="lof.png" alt="Local Outlier Factor">
+            </div>
+            <div class="results-section">
+                <h3>Anomaly Detection by Robust Covariance</h3>
+                <img src="rc.png" alt="Robust Covariance">
+            </div>
+            <div class="results-section">
+                <h3>Anomaly Detection by One-Class SVM</h3>
+                <img src="ocs.png" alt="One-Class SVM">
+            </div>
+        </div>
+        <div class="results-section">
+            <h3>Anomaly detection using Ensemble Learning</h3>
+            <img src="el.png" alt="Comparison Graph">
+        </div>
+        <!-- Comparison Model -->
+        <div class="results-section">
+            <h3>Comparison of Models</h3>
+            <img src="c.png" alt="Comparison Graph">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 VIT | Anomaly Detection System
+    </footer>
+
+    <script>
+        function goToResultsPage() {
+            document.getElementById('main-page').style.display = 'none';
+            document.getElementById('results-page').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

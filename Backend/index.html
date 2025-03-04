@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ece5dd;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #chatApp {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+            border: 1px solid #dfe6e9;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #075e54;
+            padding: 10px;
+            background-color: #075e54;
+            color: white;
+            margin: 0;
+            border-radius: 10px 10px 0 0;
+        }
+
+        #container {
+            margin: 0;
+            padding: 10px;
+            background-color: #ece5dd;
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 450px;
+        }
+
+        .message {
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 7px;
+            word-wrap: break-word;
+            max-width: 75%;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            position: relative;
+            display: inline-block;
+            clear: both;
+        }
+
+        .personal {
+            background-color: #dcf8c6;
+            color: #333;
+            text-align: left;
+            align-self: flex-end;
+            float: right;
+        }
+
+        .received {
+            background-color: #ffffff;
+            color: #333;
+            align-self: flex-start;
+            float: left;
+        }
+
+        .system {
+            text-align: center;
+            background-color: #f0f0f0;
+            color: #757575;
+            border-radius: 5px;
+            margin: 10px auto;
+            width: fit-content;
+        }
+
+        .modified {
+            background-color: #fff3e0;
+            color: #ef6c00;
+            font-style: italic;
+        }
+
+        #inputWrapper {
+            display: flex;
+            padding: 10px;
+            background-color: #f7f7f7;
+            border-top: 1px solid #dfe6e9;
+        }
+
+        #inputText {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #dfe6e9;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        #submitButton {
+            background-color: #075e54;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        #submitButton:hover {
+            background-color: #0a7b68;
+        }
+
+        #container::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        #container::-webkit-scrollbar-thumb {
+            background-color: #bbb;
+            border-radius: 5px;
+        }
+
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #f7f7f7;
+            border-top: 1px solid #dfe6e9;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #075e54;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .toggle-label {
+            margin-left: 10px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chatApp">
+        <h1>Web Chat</h1>
+        <div id="container"></div>
+        <div class="toggle-container">
+            <label class="toggle-switch">
+                <input type="checkbox" id="modeToggle">
+                <span class="slider"></span>
+            </label>
+            <span class="toggle-label">Professional Mode</span>
+        </div>
+        <div id="inputWrapper">
+            <input type="text" id="inputText" placeholder="Type a message..." />
+            <button id="submitButton" aria-label="Send message">▶</button>
+        </div>
+    </div>
+
+    <script>
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        const id = getRandomInt(1, 1000);
+        const socket = new WebSocket(`ws://${window.location.hostname}:8000/ws/${id}`);
+        const modeToggle = document.getElementById('modeToggle');
+
+        function showMessage(message, className = '') {
+            const messageContainer = document.getElementById('container');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messageElement.className = className;
+            messageContainer.appendChild(messageElement);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }
+
+        socket.addEventListener('open', (event) => {
+            showMessage('Connected to server.', 'system');
+        });
+
+        socket.addEventListener('message', (event) => {
+            const message = event.data;
+            if (message.startsWith('You:')) {
+                showMessage(message, 'personal');
+            } else if (message.startsWith('Your message was modified to:')) {
+                showMessage(message, 'modified');
+            } else if (message.startsWith('Client #')) {
+                showMessage(message, 'received');
+            } else {
+                showMessage(message, 'system');
+            }
+        });
+
+        socket.addEventListener('close', (event) => {
+            showMessage('Connection closed.', 'system');
+        });
+
+        socket.addEventListener('error', (event) => {
+            showMessage('WebSocket error: ' + event.message, 'system');
+        });
+
+        const inputText = document.getElementById("inputText");
+        const submitButton = document.getElementById("submitButton");
+
+        function sendMessage() {
+            const inputValue = inputText.value.trim();
+            if (inputValue !== '') {
+                const mode = modeToggle.checked ? 'professional' : 'filter';
+                socket.send(JSON.stringify({ text: inputValue, mode: mode }));
+                inputText.value = '';
+            }
+        }
+
+        submitButton.addEventListener("click", sendMessage);
+
+        inputText.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+
+</html>
